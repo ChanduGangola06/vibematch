@@ -1,0 +1,8 @@
+.dart_tool/
+build/
+.flutter-plugins*
+*.iml
+.idea/
+pubspec.lock
+.fvm/flutter_sdk
+.fvm/

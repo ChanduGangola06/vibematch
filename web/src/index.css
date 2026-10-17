@@ -1,0 +1,36 @@
+@import "tailwindcss";
+
+@layer utilities {
+  .glass { @apply bg-white/5 backdrop-blur-xl border border-white/10 shadow-[0_4px_30px_rgba(0,0,0,0.1)]; }
+  .glass-dark { @apply bg-black/40 backdrop-blur-2xl border border-white/5 shadow-2xl; }
+}
+
+@layer base {
+  :root { color-scheme: dark; }
+  body { @apply bg-[#0d0e12] text-gray-100 antialiased; }
+  button, [role="button"] { cursor: pointer; }
+  :focus-visible { outline: 2px solid #00e676; outline-offset: 2px; }
+}
+
+@keyframes radar-pulse {
+  0% { transform: scale(0.5); opacity: 1; box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+  70% { transform: scale(2.5); opacity: 0; box-shadow: 0 0 0 30px rgba(16, 185, 129, 0); }
+  100% { transform: scale(3); opacity: 0; box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+}
+@keyframes sweep { to { transform: rotate(360deg); } }
+@keyframes fade-in-up { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes loading-bar { 0% { transform: scaleX(0); opacity: .5; } 50% { transform: scaleX(.7); opacity: 1; } 100% { transform: scaleX(1); opacity: .5; } }
+
+.animate-radar-pulse { animation: radar-pulse 2s infinite cubic-bezier(0.215, 0.61, 0.355, 1); }
+.animate-fade-in-up { animation: fade-in-up .6s ease-out forwards; }
+.animate-loading-bar { animation: loading-bar 2s ease-in-out infinite; transform-origin: left; }
+.radar-sweep {
+  position: absolute; top: 50%; left: 50%; width: 150%; height: 150%;
+  background: conic-gradient(from 0deg, transparent 70%, rgba(16, 185, 129, 0.3) 100%);
+  transform-origin: 0 0; animation: sweep 3s linear infinite;
+}
+.premium-card { @apply rounded-[32px] overflow-hidden relative shadow-[0_20px_50px_-12px_rgba(0,0,0,0.5)] border border-white/5 bg-[#121212] transition-all duration-500; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+}

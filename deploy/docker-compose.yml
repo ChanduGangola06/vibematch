@@ -1,0 +1,68 @@
+# Production stack:  nginx (TLS, gateway)  →  api (stateless, scale with --scale api=N)  →  mongo (replica set) + redis
+#   cp .env.example .env  &&  edit  &&  docker compose up -d --build
+name: vibematch
+
+services:
+  mongo:
+    image: mongo:7
+    restart: unless-stopped
+    command: ["--replSet", "rs0", "--bind_ip_all", "--wiredTigerCacheSizeGB", "1"]
+    volumes: [mongo-data:/data/db]
+    healthcheck:
+      # initiates the single-node replica set on first start (needed for multi-document transactions)
+      test: >
+        mongosh --quiet --eval
+        "try { rs.status().ok } catch (e) { rs.initiate({_id:'rs0',members:[{_id:0,host:'mongo:27017'}]}).ok }"
+      interval: 5s
+      timeout: 10s
+      retries: 20
+      start_period: 10s
+
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    command: ["redis-server", "--appendonly", "yes", "--maxmemory", "256mb", "--maxmemory-policy", "allkeys-lru"]
+    volumes: [redis-data:/data]
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      retries: 10
+
+  api:
+    build:
+      context: ../backend
+      dockerfile: ../deploy/Dockerfile
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      NODE_ENV: production
+      PORT: "3000"
+      MONGODB_URI: mongodb://mongo:27017/vibematch?replicaSet=rs0
+      REDIS_URL: redis://redis:6379
+      TRUST_PROXY: "1"            # exactly one proxy (nginx) in front
+    depends_on:
+      mongo: { condition: service_healthy }
+      redis: { condition: service_healthy }
+    volumes: [uploads:/app/public/images/users, gift-uploads:/app/public/images/gift]
+    expose: ["3000"]
+    stop_grace_period: 15s
+
+  nginx:
+    image: nginx:1.27-alpine
+    restart: unless-stopped
+    depends_on: [api]
+    ports: ["80:80", "443:443"]
+    environment:
+      DOMAIN: ${DOMAIN}
+    volumes:
+      - ./nginx/default.conf.template:/etc/nginx/templates/default.conf.template:ro
+      - /etc/letsencrypt:/etc/letsencrypt:ro
+      - ./web:/usr/share/nginx/html:ro     # built web app (vibematch-v2/web → npm run build → copy dist here)
+      - certbot-webroot:/var/www/certbot
+
+volumes:
+  mongo-data:
+  redis-data:
+  uploads:
+  gift-uploads:
+  certbot-webroot:

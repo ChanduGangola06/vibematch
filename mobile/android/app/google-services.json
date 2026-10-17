@@ -1,0 +1,62 @@
+{
+  "project_info": {
+    "project_number": "835570960987",
+    "project_id": "xxxxxxxxx-devsnaplix",
+    "storage_bucket": "xxxxxxxxx-devsnaplix.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:xxxxxxxxx:android:xxxxxxxxxxxxxxxxxxxxxxxx",
+        "android_client_info": {
+          "package_name": "com.vibematch.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "xxxxxxxxxxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxx.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.vibematch.app",
+            "certificate_hash": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+          }
+        },
+        {
+          "client_id": "xxxxxxxxxxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxx.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.vibematch.app",
+            "certificate_hash": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+          }
+        },
+        {
+          "client_id": "xxxxxxxxxxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxx.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBuwXlL-nl_sCeLEENEmUsrzYbjn0-0_YQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "xxxxxxxxxxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxx.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "xxxxxxxxxxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxx.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.vibematch.app"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

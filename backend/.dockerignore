@@ -1,0 +1,8 @@
+node_modules
+dist
+coverage
+tests
+scripts
+.env
+*.log
+public/images/users
