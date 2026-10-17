@@ -10,10 +10,6 @@ app with a full admin panel, and a Flutter mobile app.
 | **Mobile** | Flutter (FVM-pinned), `flutter_bloc`, go_router, dio | [`mobile/`](mobile) | 68 (`flutter_test`) |
 | **Deploy** | Docker, nginx (TLS), Let's Encrypt | [`deploy/`](deploy) | `docker compose config` only |
 
-> v2 is a ground-up rework of the original CodeCanyon "VibeMatch" project (`code/`, `flutter_app/`), which is kept
-> unchanged as the behavioural reference. Requirements, design and the task checklist live in
-> [`../.claude/specs/vibematch-v2/`](../.claude/specs/vibematch-v2).
-
 ---
 
 ## Contents
